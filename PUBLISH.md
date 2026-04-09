@@ -67,9 +67,9 @@ ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest
 ```text
 PORT=1234
 INFINITY_API_KEY=<你自定義>
-EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1
+EMBED_MODEL_ID=BAAI/bge-large-en-v1.5
 RERANK_MODEL_ID=BAAI/bge-reranker-base
-EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1
+EMBED_MODEL_NAME=text-embedding-bge-large-en-v1.5
 RERANK_MODEL_NAME=bge-reranker-base
 INFINITY_ENGINE=torch
 INFINITY_DEVICE=cpu
@@ -86,7 +86,7 @@ RERANK_BATCH_SIZE=1
 curl -sS http://<zeabur-host>:1234/v1/embeddings \
   -H "Authorization: Bearer <INFINITY_API_KEY>" \
   -H "Content-Type: application/json" \
-  -d '{"model":"text-embedding-mxbai-embed-large-v1","input":["hello world"]}'
+  -d '{"model":"text-embedding-bge-large-en-v1.5","input":["hello world"]}'
 ```
 
 ### rerank

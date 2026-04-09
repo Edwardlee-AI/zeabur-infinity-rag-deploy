@@ -3,8 +3,8 @@ set -eu
 
 PORT="${PORT:-1234}"
 API_KEY="${INFINITY_API_KEY:-}"
-EMBED_MODEL_ID="${EMBED_MODEL_ID:-mixedbread-ai/mxbai-embed-large-v1}"
-EMBED_MODEL_NAME="${EMBED_MODEL_NAME:-text-embedding-mxbai-embed-large-v1}"
+EMBED_MODEL_ID="${EMBED_MODEL_ID:-BAAI/bge-large-en-v1.5}"
+EMBED_MODEL_NAME="${EMBED_MODEL_NAME:-text-embedding-bge-large-en-v1.5}"
 RERANK_MODEL_ID="${RERANK_MODEL_ID:-BAAI/bge-reranker-base}"
 RERANK_MODEL_NAME="${RERANK_MODEL_NAME:-bge-reranker-base}"
 EMBED_BATCH_SIZE="${EMBED_BATCH_SIZE:-4}"

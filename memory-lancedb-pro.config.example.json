@@ -3,7 +3,7 @@
     "provider": "openai-compatible",
     "baseURL": "http://<zeabur-service-host>:1234/v1",
     "apiKey": "${LM_API_KEY}",
-    "model": "text-embedding-mxbai-embed-large-v1"
+    "model": "text-embedding-bge-large-en-v1.5"
   },
   "retrieval": {
     "mode": "hybrid",

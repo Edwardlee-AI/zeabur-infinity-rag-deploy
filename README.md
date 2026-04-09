@@ -4,11 +4,11 @@
 **GitHub repo / GHCR image -> Zeabur service**
 
 呢個 pack 而家已經補成可獨立做 repo / image，提供：
-- `/v1/embeddings` -> `text-embedding-mxbai-embed-large-v1`
+- `/v1/embeddings` -> `text-embedding-bge-large-en-v1.5`
 - `/rerank` -> `bge-reranker-base`
 
 實際載入嘅 Hugging Face models：
-- embedding: `mixedbread-ai/mxbai-embed-large-v1`
+- embedding: `BAAI/bge-large-en-v1.5`
 - reranker: `BAAI/bge-reranker-base`
 
 ## 檔案
@@ -47,9 +47,9 @@
 最少要設：
 - `PORT=1234`
 - `INFINITY_API_KEY=<你自己定義嘅 key>`
-- `EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1`
+- `EMBED_MODEL_ID=BAAI/bge-large-en-v1.5`
 - `RERANK_MODEL_ID=BAAI/bge-reranker-base`
-- `EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1`
+- `EMBED_MODEL_NAME=text-embedding-bge-large-en-v1.5`
 - `RERANK_MODEL_NAME=bge-reranker-base`
 - `INFINITY_ENGINE=torch`
 - `INFINITY_DEVICE=cpu`
@@ -69,7 +69,8 @@
 - 16 GB RAM
 
 原因：
-- `mxbai-embed-large-v1` + `BAAI/bge-reranker-base` 係較穩陣、較易喺 CPU 起得返嘅組合
+- `BAAI/bge-large-en-v1.5` + `BAAI/bge-reranker-base` 係較穩陣、較易喺 CPU 起得返嘅組合
+- `mixedbread-ai/mxbai-embed-large-v1` 雖然模型存在，但喺當前 Infinity/base image loader 組合上會出現 model load failure
 - `Qwen/Qwen3-Reranker-0.6B` 會撞到 base image 內 `transformers` 對 `qwen3` architecture 未識別，startup 直接死
 - 關掉 startup warmup / compile / bettertransformer，可減少 Zeabur startup phase 爆掉機會
 - 首次 cold start 會下載模型，時間可能幾分鐘
@@ -89,7 +90,7 @@ curl -sS http://<host>:1234/v1/embeddings \
   -H "Authorization: Bearer <LM_API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "text-embedding-mxbai-embed-large-v1",
+    "model": "text-embedding-bge-large-en-v1.5",
     "input": ["hello world", "memory retrieval test"]
   }'
 ```
@@ -103,7 +104,7 @@ curl -sS http://<host>:1234/rerank \
     "model": "bge-reranker-base",
     "query": "best memory retrieval setup",
     "documents": [
-      "Use mxbai embeddings for retrieval.",
+      "Use BGE embeddings for retrieval.",
       "Use BM25 only.",
       "Configure local reranker for better precision."
     ]
