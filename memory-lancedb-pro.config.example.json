@@ -1,0 +1,22 @@
+{
+  "embedding": {
+    "provider": "openai-compatible",
+    "baseURL": "http://<zeabur-service-host>:1234/v1",
+    "apiKey": "${LM_API_KEY}",
+    "model": "text-embedding-mxbai-embed-large-v1"
+  },
+  "retrieval": {
+    "mode": "hybrid",
+    "vectorWeight": 0.7,
+    "bm25Weight": 0.3,
+    "rerank": "cross-encoder",
+    "rerankProvider": "custom",
+    "rerankModel": "qwen3-reranker-0.6b",
+    "rerankEndpoint": "http://<zeabur-service-host>:1234/rerank",
+    "rerankApiKey": "${LM_API_KEY}",
+    "candidatePoolSize": 12,
+    "minScore": 0.6,
+    "hardMinScore": 0.62,
+    "filterNoise": true
+  }
+}
