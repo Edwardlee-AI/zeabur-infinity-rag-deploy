@@ -68,9 +68,9 @@ ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest
 PORT=1234
 INFINITY_API_KEY=<你自定義>
 EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1
-RERANK_MODEL_ID=Qwen/Qwen3-Reranker-0.6B
+RERANK_MODEL_ID=BAAI/bge-reranker-base
 EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1
-RERANK_MODEL_NAME=qwen3-reranker-0.6b
+RERANK_MODEL_NAME=bge-reranker-base
 INFINITY_ENGINE=torch
 INFINITY_DEVICE=cpu
 INFINITY_MODEL_WARMUP=false
@@ -94,7 +94,7 @@ curl -sS http://<zeabur-host>:1234/v1/embeddings \
 curl -sS http://<zeabur-host>:1234/rerank \
   -H "Authorization: Bearer <INFINITY_API_KEY>" \
   -H "Content-Type: application/json" \
-  -d '{"model":"qwen3-reranker-0.6b","query":"memory retrieval","documents":["use embeddings","use reranker"]}'
+  -d '{"model":"bge-reranker-base","query":"memory retrieval","documents":["use embeddings","use reranker"]}'
 ```
 
 ## 8) memory-lancedb-pro 對接前提

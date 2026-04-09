@@ -5,11 +5,11 @@
 
 呢個 pack 而家已經補成可獨立做 repo / image，提供：
 - `/v1/embeddings` -> `text-embedding-mxbai-embed-large-v1`
-- `/rerank` -> `qwen3-reranker-0.6b`
+- `/rerank` -> `bge-reranker-base`
 
 實際載入嘅 Hugging Face models：
 - embedding: `mixedbread-ai/mxbai-embed-large-v1`
-- reranker: `Qwen/Qwen3-Reranker-0.6B`
+- reranker: `BAAI/bge-reranker-base`
 
 ## 檔案
 - `Dockerfile`
@@ -48,9 +48,9 @@
 - `PORT=1234`
 - `INFINITY_API_KEY=<你自己定義嘅 key>`
 - `EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1`
-- `RERANK_MODEL_ID=Qwen/Qwen3-Reranker-0.6B`
+- `RERANK_MODEL_ID=BAAI/bge-reranker-base`
 - `EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1`
-- `RERANK_MODEL_NAME=qwen3-reranker-0.6b`
+- `RERANK_MODEL_NAME=bge-reranker-base`
 - `INFINITY_ENGINE=torch`
 - `INFINITY_DEVICE=cpu`
 - `INFINITY_MODEL_WARMUP=false`
@@ -69,8 +69,8 @@
 - 16 GB RAM
 
 原因：
-- `mxbai-embed-large-v1` 同 `Qwen/Qwen3-Reranker-0.6B` 喺 CPU 上用 `torch` 兼容性高過 `optimum`
-- `Qwen3-Reranker-0.6B` CPU 跑得郁，但 latency 會慢過 embedding
+- `mxbai-embed-large-v1` + `BAAI/bge-reranker-base` 係較穩陣、較易喺 CPU 起得返嘅組合
+- `Qwen/Qwen3-Reranker-0.6B` 會撞到 base image 內 `transformers` 對 `qwen3` architecture 未識別，startup 直接死
 - 關掉 startup warmup / compile / bettertransformer，可減少 Zeabur startup phase 爆掉機會
 - 首次 cold start 會下載模型，時間可能幾分鐘
 
@@ -100,7 +100,7 @@ curl -sS http://<host>:1234/rerank \
   -H "Authorization: Bearer <LM_API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "qwen3-reranker-0.6b",
+    "model": "bge-reranker-base",
     "query": "best memory retrieval setup",
     "documents": [
       "Use mxbai embeddings for retrieval.",

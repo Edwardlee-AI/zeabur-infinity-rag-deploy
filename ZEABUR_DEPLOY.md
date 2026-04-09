@@ -22,9 +22,9 @@
 PORT=1234
 INFINITY_API_KEY=<你自定義>
 EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1
-RERANK_MODEL_ID=Qwen/Qwen3-Reranker-0.6B
+RERANK_MODEL_ID=BAAI/bge-reranker-base
 EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1
-RERANK_MODEL_NAME=qwen3-reranker-0.6b
+RERANK_MODEL_NAME=bge-reranker-base
 INFINITY_ENGINE=torch
 INFINITY_DEVICE=cpu
 INFINITY_MODEL_WARMUP=false
