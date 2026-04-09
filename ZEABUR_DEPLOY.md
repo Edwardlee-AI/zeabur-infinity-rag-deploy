@@ -13,7 +13,7 @@
 ## Option B: GHCR image
 如果你用 GHCR image：
 - Source: Image
-- Image: `ghcr.io/edwardlee-ai/zeabur-infinity-rag:latest`
+- Image: `ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest`
 - Port: `1234`
 - Health Check Path: `/docs`
 

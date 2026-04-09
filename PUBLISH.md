@@ -2,7 +2,7 @@
 
 建議 repo 名：`zeabur-infinity-rag`
 建議 GitHub repo：`Edwardlee-AI/zeabur-infinity-rag`
-建議 image：`ghcr.io/edwardlee-ai/zeabur-infinity-rag:latest`
+建議 image：`ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest`
 
 ## 1) 喺 GitHub 建 private repo
 用 GitHub UI 建：
@@ -32,8 +32,8 @@ git push -u origin main
 repo push 完之後，`.github/workflows/docker-publish.yml` 會自動 build 同 push 去 GHCR。
 
 預期 image tag：
-- `ghcr.io/edwardlee-ai/zeabur-infinity-rag:latest`
-- `ghcr.io/edwardlee-ai/zeabur-infinity-rag:sha-<commit>`
+- `ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest`
+- `ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:sha-<commit>`
 
 ## 4) 首次檢查 GitHub Actions
 ```bash
@@ -50,7 +50,7 @@ gh run view --repo Edwardlee-AI/zeabur-infinity-rag --log-failed
 ## 6) Zeabur 掛 image
 ### Image
 ```text
-ghcr.io/edwardlee-ai/zeabur-infinity-rag:latest
+ghcr.io/edwardlee-ai/zeabur-infinity-rag-deploy:latest
 ```
 
 ### Port

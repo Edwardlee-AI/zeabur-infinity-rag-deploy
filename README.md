@@ -32,7 +32,7 @@
 
 ### Flow B: GitHub repo -> GHCR image -> Zeabur 用 image deploy
 - push 去 GitHub
-- GitHub Actions 自動 build/push 去 `ghcr.io/<owner>/zeabur-infinity-rag`
+- GitHub Actions 自動 build/push 去 `ghcr.io/<owner>/zeabur-infinity-rag-deploy`
 - Zeabur 直接食 GHCR image
 
 如果你要穩定 repeatable deploy，我偏向 **Flow B**。
@@ -124,7 +124,7 @@ curl -sS http://<host>:1234/rerank \
 如果用 GitHub Actions 推 GHCR：
 - repo 預設用 `main` branch
 - workflow 已經寫好，push 去 `main` 就會 build + push
-- image 名：`ghcr.io/<github-owner>/zeabur-infinity-rag:latest`
+- image 名：`ghcr.io/<github-owner>/zeabur-infinity-rag-deploy:latest`
 
 ## 我建議嘅落地順序
 1. 先將呢個目錄做成獨立 GitHub repo
