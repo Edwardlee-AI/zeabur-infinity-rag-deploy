@@ -25,10 +25,13 @@ EMBED_MODEL_ID=mixedbread-ai/mxbai-embed-large-v1
 RERANK_MODEL_ID=Qwen/Qwen3-Reranker-0.6B
 EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1
 RERANK_MODEL_NAME=qwen3-reranker-0.6b
-INFINITY_ENGINE=optimum
+INFINITY_ENGINE=torch
 INFINITY_DEVICE=cpu
-EMBED_BATCH_SIZE=8
-RERANK_BATCH_SIZE=2
+INFINITY_MODEL_WARMUP=false
+INFINITY_COMPILE=false
+INFINITY_BETTERTRANSFORMER=false
+EMBED_BATCH_SIZE=4
+RERANK_BATCH_SIZE=1
 ```
 
 ## Resource suggestion
@@ -42,5 +45,5 @@ RERANK_BATCH_SIZE=2
 
 ## Notes
 - 首次部署會下載 Hugging Face model，耐少少係正常
-- 如果 build / startup time 太短就死，多數係 memory 唔夠或者 model download fail
+- 如果 build / startup time 太短就死，多數係 engine/model 組合唔兼容、memory 唔夠，或者 model download fail
 - CPU reranker 慢係正常，candidate pool 唔好一開始設太大

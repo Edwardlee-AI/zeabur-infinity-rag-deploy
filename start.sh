@@ -7,10 +7,13 @@ EMBED_MODEL_ID="${EMBED_MODEL_ID:-mixedbread-ai/mxbai-embed-large-v1}"
 EMBED_MODEL_NAME="${EMBED_MODEL_NAME:-text-embedding-mxbai-embed-large-v1}"
 RERANK_MODEL_ID="${RERANK_MODEL_ID:-Qwen/Qwen3-Reranker-0.6B}"
 RERANK_MODEL_NAME="${RERANK_MODEL_NAME:-qwen3-reranker-0.6b}"
-EMBED_BATCH_SIZE="${EMBED_BATCH_SIZE:-8}"
-RERANK_BATCH_SIZE="${RERANK_BATCH_SIZE:-2}"
-ENGINE="${INFINITY_ENGINE:-optimum}"
+EMBED_BATCH_SIZE="${EMBED_BATCH_SIZE:-4}"
+RERANK_BATCH_SIZE="${RERANK_BATCH_SIZE:-1}"
+ENGINE="${INFINITY_ENGINE:-torch}"
 DEVICE="${INFINITY_DEVICE:-cpu}"
+MODEL_WARMUP="${INFINITY_MODEL_WARMUP:-false}"
+COMPILE="${INFINITY_COMPILE:-false}"
+BETTERTRANSFORMER="${INFINITY_BETTERTRANSFORMER:-false}"
 
 ARGS="v2 \
   --host 0.0.0.0 \
@@ -30,8 +33,28 @@ if [ -n "$API_KEY" ]; then
   ARGS="$ARGS --api-key ${API_KEY}"
 fi
 
-echo "[start] infinity on :${PORT}"
-echo "[start] embedding=${EMBED_MODEL_ID} as ${EMBED_MODEL_NAME}"
-echo "[start] reranker=${RERANK_MODEL_ID} as ${RERANK_MODEL_NAME}"
+if [ "$MODEL_WARMUP" = "true" ]; then
+  ARGS="$ARGS --model-warmup"
+else
+  ARGS="$ARGS --no-model-warmup"
+fi
 
-eval exec infinity_emb ${ARGS}
+if [ "$COMPILE" = "true" ]; then
+  ARGS="$ARGS --compile"
+else
+  ARGS="$ARGS --no-compile"
+fi
+
+if [ "$BETTERTRANSFORMER" = "true" ]; then
+  ARGS="$ARGS --bettertransformer"
+else
+  ARGS="$ARGS --no-bettertransformer"
+fi
+
+echo "[start] infinity on :${PORT}"
+echo "[start] engine=${ENGINE} device=${DEVICE}"
+echo "[start] embedding=${EMBED_MODEL_ID} as ${EMBED_MODEL_NAME} batch=${EMBED_BATCH_SIZE}"
+echo "[start] reranker=${RERANK_MODEL_ID} as ${RERANK_MODEL_NAME} batch=${RERANK_BATCH_SIZE}"
+echo "[start] model_warmup=${MODEL_WARMUP} compile=${COMPILE} bettertransformer=${BETTERTRANSFORMER}"
+
+exec sh -c "infinity_emb ${ARGS}"

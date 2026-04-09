@@ -51,10 +51,13 @@
 - `RERANK_MODEL_ID=Qwen/Qwen3-Reranker-0.6B`
 - `EMBED_MODEL_NAME=text-embedding-mxbai-embed-large-v1`
 - `RERANK_MODEL_NAME=qwen3-reranker-0.6b`
-- `INFINITY_ENGINE=optimum`
+- `INFINITY_ENGINE=torch`
 - `INFINITY_DEVICE=cpu`
-- `EMBED_BATCH_SIZE=8`
-- `RERANK_BATCH_SIZE=2`
+- `INFINITY_MODEL_WARMUP=false`
+- `INFINITY_COMPILE=false`
+- `INFINITY_BETTERTRANSFORMER=false`
+- `EMBED_BATCH_SIZE=4`
+- `RERANK_BATCH_SIZE=1`
 
 ## 資源建議
 ### 最低可試
@@ -66,8 +69,9 @@
 - 16 GB RAM
 
 原因：
-- `mxbai-embed-large-v1` 本身唔細
+- `mxbai-embed-large-v1` 同 `Qwen/Qwen3-Reranker-0.6B` 喺 CPU 上用 `torch` 兼容性高過 `optimum`
 - `Qwen3-Reranker-0.6B` CPU 跑得郁，但 latency 會慢過 embedding
+- 關掉 startup warmup / compile / bettertransformer，可減少 Zeabur startup phase 爆掉機會
 - 首次 cold start 會下載模型，時間可能幾分鐘
 
 ## Health check 建議

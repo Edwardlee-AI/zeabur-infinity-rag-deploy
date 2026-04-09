@@ -2,6 +2,13 @@ FROM michaelf34/infinity:latest-cpu
 
 ENV HF_HOME=/app/.cache/huggingface
 ENV PORT=1234
+ENV INFINITY_ENGINE=torch
+ENV INFINITY_DEVICE=cpu
+ENV INFINITY_MODEL_WARMUP=false
+ENV INFINITY_COMPILE=false
+ENV INFINITY_BETTERTRANSFORMER=false
+ENV EMBED_BATCH_SIZE=4
+ENV RERANK_BATCH_SIZE=1
 
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
