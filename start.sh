@@ -15,6 +15,11 @@ MODEL_WARMUP="${INFINITY_MODEL_WARMUP:-false}"
 COMPILE="${INFINITY_COMPILE:-false}"
 BETTERTRANSFORMER="${INFINITY_BETTERTRANSFORMER:-false}"
 
+# Optional third model (e.g. BAAI/bge-m3 for A/B load testing). Empty = not loaded.
+RAG2_MODEL_ID="${RAG2_MODEL_ID:-}"
+RAG2_MODEL_NAME="${RAG2_MODEL_NAME:-}"
+RAG2_BATCH_SIZE="${RAG2_BATCH_SIZE:-4}"
+
 ARGS="v2 \
   --host 0.0.0.0 \
   --port ${PORT} \
@@ -28,6 +33,17 @@ ARGS="v2 \
   --model-id ${RERANK_MODEL_ID} \
   --served-model-name ${RERANK_MODEL_NAME} \
   --batch-size ${RERANK_BATCH_SIZE}"
+
+if [ -n "$RAG2_MODEL_ID" ]; then
+  ARGS="$ARGS \
+  --engine ${ENGINE} \
+  --device ${DEVICE} \
+  --model-id ${RAG2_MODEL_ID} \
+  --batch-size ${RAG2_BATCH_SIZE}"
+  if [ -n "$RAG2_MODEL_NAME" ]; then
+    ARGS="$ARGS --served-model-name ${RAG2_MODEL_NAME}"
+  fi
+fi
 
 if [ -n "$API_KEY" ]; then
   ARGS="$ARGS --api-key ${API_KEY}"
@@ -55,6 +71,9 @@ echo "[start] infinity on :${PORT}"
 echo "[start] engine=${ENGINE} device=${DEVICE}"
 echo "[start] embedding=${EMBED_MODEL_ID} as ${EMBED_MODEL_NAME} batch=${EMBED_BATCH_SIZE}"
 echo "[start] reranker=${RERANK_MODEL_ID} as ${RERANK_MODEL_NAME} batch=${RERANK_BATCH_SIZE}"
+if [ -n "$RAG2_MODEL_ID" ]; then
+  echo "[start] rag2=${RAG2_MODEL_ID} as ${RAG2_MODEL_NAME:-default} batch=${RAG2_BATCH_SIZE}"
+fi
 echo "[start] model_warmup=${MODEL_WARMUP} compile=${COMPILE} bettertransformer=${BETTERTRANSFORMER}"
 
 exec sh -c "infinity_emb ${ARGS}"
