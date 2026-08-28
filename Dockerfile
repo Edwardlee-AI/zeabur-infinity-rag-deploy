@@ -1,7 +1,7 @@
 FROM michaelf34/infinity:latest-cpu
 
 # Qwen3-Embedding requires transformers >= 4.51 (qwen3 arch not in image's bundled version)
-RUN pip install --no-cache-dir --upgrade "transformers>=4.51"
+RUN pip install --no-cache-dir "transformers>=4.51,<5" "huggingface_hub<1.0"
 
 ENV HF_HOME=/app/.cache/huggingface
 ENV PORT=1234
